@@ -3,8 +3,9 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-let items = ["Web dev","Soft eng","com Net"];
-let workItems = [];
+var items = ["Web dev","Soft eng","com Net"];
+
+var workItems = [];
 
 app.set('view engine', 'ejs');
 
@@ -22,27 +23,42 @@ app.get("/", function(req, res) {
     day: "numeric",
     month: "long"
   };
-  var day = today.toLocaleDateString("en-us", options);
+  var day = today.toLocaleDateString("hi-IN", options);
 
   res.render("list", {
     listTitle: day,
-    newListItem: items
+    newListItems: items
   });
 });
 
 app.post("/", function(req, res) {
-  var item = req.body.newItem;
+var item = req.body.newItem;
 
-  items.push(item);
+  if(req.body.list === "Work"){
+    workItems.push(item);
+    res.redirect("/work");
+  } else{
+    items.push(item);
 
-  res.redirect("/");
+    res.redirect("/");
+
+  }
+
+
+
 });
+
+
 
 app.get("/work",function(req,res){
-  res.render("list",{listTitle: "Work List",newListItems:workItems})
-});
+  res.render("list",{listTitle:"Work List", newListItems:workItems});
+})
 
-app.post("/work", function(req,res){
+app.get("/about", function(req,res){
+  res.render("about");
+})
+
+app.post("/work",function(req,res){
   let item = req.body.newItem;
   workItems.push(item);
   res.redirect("/work");
