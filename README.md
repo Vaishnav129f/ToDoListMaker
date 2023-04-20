@@ -17,7 +17,7 @@ localhost:3000
 
 
 date format 
-
+ 
 var day = today.toLocateDateString("en-US,options);
 en-US == hi-IN for hindi format 
 
